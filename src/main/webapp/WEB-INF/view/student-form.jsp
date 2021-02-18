@@ -20,17 +20,15 @@
 
     <br><br>
 
-    Country:
+    	Country:
 		
-    <form:select path="country">
-    
-        <form:option value="Brazil" label="Brazil" />
-        <form:option value="France" label="France" />
-        <form:option value="Russia" label="Russia" />
-        
-    </form:select>
-            
-    <br><br>
+		<form:select path="country">
+		
+			<form:options items="${student.countryOptions}" />
+			
+		</form:select>
+				
+		<br><br>
 
     <input type="submit" value="Submit" />
 
