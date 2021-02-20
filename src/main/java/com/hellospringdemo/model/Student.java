@@ -1,16 +1,20 @@
 package com.hellospringdemo.model;
 
 import java.util.LinkedHashMap;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Student {
     
+    @NotNull(message="is required")
+	@Size(min=1, message="is required")
     private String firstName;
     private String lastName;
     private String country;
     private String favoriteLanguage;
 
     private LinkedHashMap<String, String> favoriteLanguageOptions;
-    
+
     private String[] operatingSystems;
 
     public Student() {

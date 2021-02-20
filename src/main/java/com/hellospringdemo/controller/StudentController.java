@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.Map;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 @RequestMapping("/student")
@@ -29,8 +31,13 @@ public class StudentController {
     }
 
     @RequestMapping("/processForm")
-    public String processForm(@ModelAttribute("student") Student student) {
-        System.out.println("student: " + student.getFirstName());
+    public String processForm(@Valid @ModelAttribute("student") Student student,
+                                BindingResult bindintResult) {
+        System.out.println("student: " + student.getFirstName());        
+
+        if (bindintResult.hasErrors()) {
+            return "student-form";
+        }
 
         return "student-confirmation";
     }
