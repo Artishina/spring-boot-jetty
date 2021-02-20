@@ -27,6 +27,11 @@
 
     <br><br>
 
+    Free passes: <form:input path="freePasses" />
+                <form:errors path="freePasses" cssClass="error"></form:errors>
+
+    <br><br>
+
     	Country:
 		
 		<form:select path="country"> 

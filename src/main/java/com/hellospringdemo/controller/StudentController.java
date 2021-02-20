@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/student")
@@ -42,11 +43,13 @@ public class StudentController {
     }
 
     @RequestMapping("/processForm")
-    public String processForm(@Valid @ModelAttribute("student") Student student,
+    public String processForm(HttpServletRequest request,
+                                @Valid @ModelAttribute("student") Student student,
                                 BindingResult bindintResult) {
         System.out.println("student: " + student.getFirstName());        
 
         if (bindintResult.hasErrors()) {
+            request.setAttribute("theCountryOptions", countryOptions);
             return "student-form";
         }
 

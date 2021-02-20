@@ -3,6 +3,8 @@ package com.hellospringdemo.model;
 import java.util.LinkedHashMap;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
 
 public class Student {
     
@@ -16,6 +18,10 @@ public class Student {
     private LinkedHashMap<String, String> favoriteLanguageOptions;
 
     private String[] operatingSystems;
+
+    @Min(value = 0, message = "must be greater than or equal to zero")
+    @Max(value = 10, message = "must be less than or equal to 10")
+    private int freePasses;
 
     public Student() {
         favoriteLanguageOptions = new LinkedHashMap<String, String>();
@@ -69,4 +75,12 @@ public class Student {
 	public void setOperatingSystems(String[] operatingSystems) {
 		this.operatingSystems = operatingSystems;
 	}
+
+    public int getFreePasses() {
+        return freePasses;
+    }
+
+    public void setFreePasses(int freePasses) {
+        this.freePasses = freePasses;
+    }
 }

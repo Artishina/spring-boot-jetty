@@ -18,6 +18,10 @@ Country: ${student.country}
 
 <br><br>
 
+Free passess: ${student.freePasses}
+
+<br><br>
+
 Favorite Language: ${student.favoriteLanguage}
 
 <br><br>
