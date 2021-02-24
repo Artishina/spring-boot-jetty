@@ -36,6 +36,12 @@ Operating Systems:
 	</c:forEach>
 </ul>
 
+<br><br>
+
+Postal Code: ${student.postalCode}
+
+<br><br>
+
 </body>
 
 </html>
