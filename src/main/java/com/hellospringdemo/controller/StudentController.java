@@ -46,7 +46,9 @@ public class StudentController {
     public String processForm(HttpServletRequest request,
                                 @Valid @ModelAttribute("student") Student student,
                                 BindingResult bindintResult) {
-        System.out.println("student: " + student.getFirstName());        
+        System.out.println("student: " + student.getFirstName());    
+        
+        System.out.println("BindingResult: " + bindintResult + "\n\n\n\n");                            
 
         if (bindintResult.hasErrors()) {
             request.setAttribute("theCountryOptions", countryOptions);
