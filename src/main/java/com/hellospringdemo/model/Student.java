@@ -3,9 +3,12 @@ package com.hellospringdemo.model;
 import java.util.LinkedHashMap;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
+
+import com.hellospringdemo.validation.CourseCode;
 
 public class Student {
     
@@ -27,6 +30,9 @@ public class Student {
 
     @Pattern(regexp="^[a-zA-Z0-9]{5}", message = "only 5 chars/digits")
     private String postalCode;
+
+    @CourseCode(value = "POLLY", message = "must starts with Polly")
+    private String courseCode;
 
     public Student() {
         favoriteLanguageOptions = new LinkedHashMap<String, String>();
@@ -95,5 +101,13 @@ public class Student {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 }

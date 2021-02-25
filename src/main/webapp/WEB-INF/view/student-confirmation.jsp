@@ -42,6 +42,10 @@ Postal Code: ${student.postalCode}
 
 <br><br>
 
+Course Code: ${student.courseCode}
+
+<br><br>
+
 </body>
 
 </html>
