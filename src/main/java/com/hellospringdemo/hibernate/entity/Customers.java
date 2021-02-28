@@ -23,7 +23,10 @@ public class Customers {
     @Column(name = "customer_name")
     private String customerName;
 
-    @OneToOne(mappedBy = "customersDetail", cascade = CascadeType.ALL)
+    //@OneToOne(mappedBy = "customersDetail", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "customersDetail", 
+                cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+                CascadeType.REFRESH})
     private Contacts contact;
 
     public Customers() {

@@ -26,7 +26,7 @@ public class DeleteCustomerDetailDemo {
 			session.beginTransaction();
 
 			// get the customer detail object
-			int theId = 2;
+			int theId = 3;  
 			Customers customer = 
 					session.get(Customers.class, theId);
 			
@@ -37,7 +37,12 @@ public class DeleteCustomerDetailDemo {
 			System.out.println("the associated contact: " + 
 								customer.getContact());
 
-                                // now let's delete the instructor detail
+            // remove the associated object reference
+			// break bi-directional link
+
+            customer.getContact().setCustomersDetail(null);
+
+            // now let's delete the instructor detail
 			System.out.println("Deleting customer: " 
             + customer);
 
