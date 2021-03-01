@@ -1,4 +1,4 @@
-package com.hellospringdemo.hibernate;
+package com.hellospringdemo.hibernate.student;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
