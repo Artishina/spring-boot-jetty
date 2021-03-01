@@ -1,4 +1,4 @@
-package com.hellospringdemo.hibernate;
+package com.hellospringdemo.hibernate.OneToMany;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -6,8 +6,9 @@ import org.hibernate.cfg.Configuration;
 
 import com.hellospringdemo.hibernate.entity.Contacts;
 import com.hellospringdemo.hibernate.entity.Customers;
+import com.hellospringdemo.hibernate.entity.Orders;
 
-public class DeleteDemo {
+public class DeleteOrderDemo {
 
 	public static void main(String[] args) {
 
@@ -16,6 +17,7 @@ public class DeleteDemo {
                                 .configure("/com/hellospringdemo/hibernate/hibernate.cfg.xml")
                                 .addAnnotatedClass(Contacts.class)
                                 .addAnnotatedClass(Customers.class)
+                                .addAnnotatedClass(Orders.class)
                                 .buildSessionFactory();
 		
 		// create session
@@ -25,33 +27,28 @@ public class DeleteDemo {
 			
 			// start a transaction
 			session.beginTransaction();
+			
+			// get an order
+			int id = 1;
+			Orders order = session.get(Orders.class, id);
+			
+			// delete order
+			System.out.println("Deleting order: " + order);
+			
+			session.delete(order);
 
-			// get contact by primary key / id
-			int theId = 1;
-            Contacts contact = session.get(Contacts.class, theId);
-			
-			System.out.println("Found contact: " + contact);
-			
-			// delete the contact
-			if (contact != null) {
-			
-				System.out.println("Deleting: " + contact);
-				
-				// Note: will ALSO delete associated "details" object
-				// because of CascadeType.ALL
-				//
-				session.delete(contact);				
-			}
-			
 			// commit transaction
 			session.getTransaction().commit();
 			
 			System.out.println("Done!");
 		}
 		finally {
+			
+			// add clean up code
+			session.close();
+			
 			factory.close();
 		}
 	}
-
 }
 

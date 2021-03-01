@@ -1,13 +1,12 @@
-package com.hellospringdemo.hibernate;
+package com.hellospringdemo.hibernate.OneToOne;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
 import com.hellospringdemo.hibernate.entity.Contacts;
 import com.hellospringdemo.hibernate.entity.Customers;
 
-public class CreateDemo {
+public class GetCustomerDetailDemo {
 
 	public static void main(String[] args) {
 
@@ -23,41 +22,36 @@ public class CreateDemo {
 		
 		try {			
 			
-			// create the objects
-			
-			Contacts contact = 
-					new Contacts("Madhu", "888-888", "madhu@luv2code.com");
-			
-			Customers customer =
-					new Customers("Madhu");	
-			
-			// associate the objects
-			contact.setCustomersDetail(customer);;
-			
 			// start a transaction
 			session.beginTransaction();
+
+			// get the customer detail object
+			int theId = 2;
+			Customers customer = 
+					session.get(Customers.class, theId);
 			
-			// save the instructor
-			//
-			// Note: this will ALSO save the details object
-			// because of CascadeType.ALL
-			//
-			System.out.println("Saving contact: " + contact);
-			session.save(contact);					
+			// print the customer detail
+			System.out.println("customer: " + customer);
+						
+			// print  the associated contact
+			System.out.println("the associated contact: " + 
+								customer.getContact());
 			
 			// commit transaction
 			session.getTransaction().commit();
 			
 			System.out.println("Done!");
 		}
+		catch (Exception exc) {
+			exc.printStackTrace();
+		}
 		finally {
+			// handle connection leak issue
+			session.close();
+			
 			factory.close();
 		}
 	}
 
 }
-
-
-
-
 

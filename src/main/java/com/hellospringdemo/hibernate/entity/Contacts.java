@@ -1,5 +1,8 @@
 package com.hellospringdemo.hibernate.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -31,6 +35,11 @@ public class Contacts {
 
     @Column(name = "email")
     private String email;
+
+    @OneToMany(mappedBy = "contactsDetail",
+                cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+                CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Orders> orders;
 
     public Contacts() {
 
@@ -83,9 +92,29 @@ public class Contacts {
         this.customersDetail = customersDetail;
     }
 
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
+    }
+
     @Override
     public String toString() {
         return "contact detail id: " + contactId + " contact_name " + contactName
             + " phone: " + phone + " email: " + email;
     }
+
+    // add convenience methods for bi-directional relationship
+	public void add(Orders order) {
+		
+		if (orders == null) {
+			orders = new ArrayList<>();
+		}
+		
+		orders.add(order);
+		
+		order.setContactsDetail(this);
+	}
 }

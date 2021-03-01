@@ -1,21 +1,22 @@
-package com.hellospringdemo.hibernate;
+package com.hellospringdemo.hibernate.OneToOne;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
 import com.hellospringdemo.hibernate.entity.Contacts;
 import com.hellospringdemo.hibernate.entity.Customers;
 
-public class GetCustomerDetailDemo {
+public class DeleteDemo {
 
 	public static void main(String[] args) {
 
 		// create session factory
 		SessionFactory factory = new Configuration()
                                 .configure("/com/hellospringdemo/hibernate/hibernate.cfg.xml")
-								.addAnnotatedClass(Contacts.class)
-								.addAnnotatedClass(Customers.class)
-								.buildSessionFactory();
+                                .addAnnotatedClass(Contacts.class)
+                                .addAnnotatedClass(Customers.class)
+                                .buildSessionFactory();
 		
 		// create session
 		Session session = factory.getCurrentSession();
@@ -25,30 +26,29 @@ public class GetCustomerDetailDemo {
 			// start a transaction
 			session.beginTransaction();
 
-			// get the customer detail object
-			int theId = 2;
-			Customers customer = 
-					session.get(Customers.class, theId);
+			// get contact by primary key / id
+			int theId = 1;
+            Contacts contact = session.get(Contacts.class, theId);
 			
-			// print the customer detail
-			System.out.println("customer: " + customer);
-						
-			// print  the associated contact
-			System.out.println("the associated contact: " + 
-								customer.getContact());
+			System.out.println("Found contact: " + contact);
+			
+			// delete the contact
+			if (contact != null) {
+			
+				System.out.println("Deleting: " + contact);
+				
+				// Note: will ALSO delete associated "details" object
+				// because of CascadeType.ALL
+				//
+				session.delete(contact);				
+			}
 			
 			// commit transaction
 			session.getTransaction().commit();
 			
 			System.out.println("Done!");
 		}
-		catch (Exception exc) {
-			exc.printStackTrace();
-		}
 		finally {
-			// handle connection leak issue
-			session.close();
-			
 			factory.close();
 		}
 	}
