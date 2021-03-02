@@ -29,3 +29,13 @@ CREATE TABLE orders(
       FOREIGN KEY(contact_id) 
 	  REFERENCES contacts(contact_id)
 );
+
+CREATE TABLE review(
+   id INT GENERATED ALWAYS AS IDENTITY,
+   com VARCHAR(256) DEFAULT NULL,
+   order_id INT DEFAULT NULL,
+   PRIMARY KEY(id),
+	CONSTRAINT fk_order
+      FOREIGN KEY(order_id) 
+	  REFERENCES orders(id)
+);
