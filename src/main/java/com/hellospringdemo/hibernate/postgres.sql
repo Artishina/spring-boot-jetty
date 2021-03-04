@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS customers;
 DROP TABLE IF EXISTS contacts;
 DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS review;
+DROP TABLE IF EXISTS order_student;
 
 CREATE TABLE customers(
    customer_id INT GENERATED ALWAYS AS IDENTITY,
@@ -38,4 +40,17 @@ CREATE TABLE review(
 	CONSTRAINT fk_order
       FOREIGN KEY(order_id) 
 	  REFERENCES orders(id)
+);
+
+CREATE TABLE order_student( 
+	order_id INT DEFAULT NULL,
+	student_id INT DEFAULT NULL,
+	
+	CONSTRAINT fk_order
+      FOREIGN KEY(order_id) 
+	  REFERENCES orders(id),
+
+	CONSTRAINT fk_student
+      FOREIGN KEY(student_id) 
+	  REFERENCES student(id)
 );

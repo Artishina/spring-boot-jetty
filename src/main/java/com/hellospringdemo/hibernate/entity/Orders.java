@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -36,6 +38,16 @@ public class Orders {
     @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="order_id")
 	private List<Review> reviews;
+
+    @ManyToMany(fetch=FetchType.LAZY,
+			cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+			 CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+        name="order_student",
+        joinColumns = @JoinColumn(name="order_id"),
+        inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<Student> students;
 
     public Orders() {
 
@@ -89,5 +101,22 @@ public class Orders {
     @Override
     public String toString() {
         return "Order id " + id + " title " + title;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public void addStudent(Student student) {
+
+        if (students == null) {
+			students = new ArrayList<>();
+		}
+
+        students.add(student);
     }
 }
